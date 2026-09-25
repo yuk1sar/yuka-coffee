@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import AdminLogin from '../components/AdminLogin'
 import Admin from '../components/Admin'
 
@@ -6,13 +6,14 @@ function AdminPage() {
   const [token, setToken] = useState(
     localStorage.getItem('adminToken')
   )
+  const handleLogout = useCallback(() => setToken(null), [])
 
   return (
     <div className="page">
       {token ? (
         <Admin
           token={token}
-          onLogout={() => setToken(null)}
+          onLogout={handleLogout}
         />
       ) : (
         <AdminLogin

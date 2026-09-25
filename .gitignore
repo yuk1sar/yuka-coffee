@@ -31,3 +31,9 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+# Safe configuration templates
+!.env.example
+!**/.env.example
+# Private database backups
+*.backup
+*.dump

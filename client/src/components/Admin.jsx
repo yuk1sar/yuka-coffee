@@ -1,3 +1,4 @@
+import { API_URL } from '../api'
 import { useEffect, useState } from 'react'
 
 function Admin({ token, onLogout }) {
@@ -6,14 +7,15 @@ function Admin({ token, onLogout }) {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
-  const loadReservations = async () => {
+  useEffect(() => {
+    const controller = new AbortController()
+    const loadReservations = async () => {
     try {
-      setLoading(true)
-      setError('')
 
       const response = await fetch(
-        'http://127.0.0.1:5000/api/reservations',
+        `${API_URL}/api/reservations`,
         {
+          signal: controller.signal,
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -36,11 +38,14 @@ function Admin({ token, onLogout }) {
 
       setReservations(data)
     } catch (error) {
-      setError(error.message)
+      if (!controller.signal.aborted) setError(error.message)
     } finally {
-      setLoading(false)
+      if (!controller.signal.aborted) setLoading(false)
     }
-  }
+    }
+    loadReservations()
+    return () => controller.abort()
+  }, [token, onLogout])
 
   const updateStatus = async (id, status) => {
     try {
@@ -48,7 +53,7 @@ function Admin({ token, onLogout }) {
       setSuccess('')
 
       const response = await fetch(
-        `http://127.0.0.1:5000/api/reservations/${id}/status`,
+        `${API_URL}/api/reservations/${id}/status`,
         {
           method: 'PATCH',
 
@@ -102,10 +107,6 @@ function Admin({ token, onLogout }) {
     localStorage.removeItem('adminToken')
     onLogout()
   }
-
-  useEffect(() => {
-    loadReservations()
-  }, [])
 
   if (loading) {
     return (

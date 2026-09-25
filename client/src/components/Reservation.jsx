@@ -1,3 +1,4 @@
+import { API_URL } from '../api'
 import { useState } from 'react'
 
 function Reservation() {
@@ -92,7 +93,7 @@ function Reservation() {
 
     try {
       const response = await fetch(
-        'http://127.0.0.1:5000/api/reservations',
+        `${API_URL}/api/reservations`,
         {
           method: 'POST',
 
