@@ -1,18 +1,8 @@
-A full-stack coffee shop (Yuka Coffee) web application.
+Yuka Coffee
 
-Tech stack:
-React
-Node.js
-Express
-PostgreSQL
-JWT
-bcrypt
+A responsive coffee shop website that works on both mobile devices and computers and is publicly available online.
 
-Features:
-Reservation system
-Admin panel
-Protected routes
-Form validation
-Custom 404 page
+I built the frontend with React and the backend with Node.js and Express, connected a PostgreSQL database, and implemented table reservations and an admin panel with JWT authentication and bcrypt password hashing.
+The project includes form validation, API protection, and reservation status management. Deployed with Vercel, Render, and Neon.
 
-This project was created for fun and learning.
+Made for joy of creating)
